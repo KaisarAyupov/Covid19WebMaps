@@ -107,7 +107,7 @@ legend_html = """
     </div>
   </div>
 </div>
-<p class="text-muted" style="font-size:x-small;">Data comes from<a href="https://www.coronavirus2020.kz/">coronavirus2020.kz</a></p>
+<p class="text-muted" style="font-size:x-small;">Data comes from <a href="https://www.coronavirus2020.kz/"> coronavirus2020.kz</a></p>
 </div>"""
 
 map.get_root().html.add_child(folium.Element(legend_html))
@@ -116,4 +116,4 @@ map.add_child(fgv)
 ##map.add_child(fgp)
 map.add_child(folium.LayerControl())
 
-map.save("Covid_19kz.html")
+map.save("index.html")
