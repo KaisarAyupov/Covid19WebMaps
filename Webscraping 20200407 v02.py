@@ -27,16 +27,16 @@ data_cov.drop(columns =[0], inplace = True)
 ##columns = data.columns
 # df display 
 covid19 = data_cov.iloc[1:-1]
-
 #Create a DataFrame object
 geocovid19 = pd.DataFrame(covid19)
+print(geocovid19['covid19'].sum())
 class_id = pd.Series([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18])
 xdd = pd.Series([0, 71.43696,76.942934,69.531221,69.901514,58.596482,77.928852,52.083663,81.494236,72.139875,50.673668,70.99457,64.01718,63.641641,53.971744,76.242826,69.266071,68.449423])
 ydd = pd.Series([0, 51.143885,43.215482,42.346375,51.787224,48.604025,44.980398,47.476414,48.798196,44.31766,49.792786,48.223676,51.601806,45.194056,44.112844,52.070653,53.856356,43.221283])
 geocovid19['class_id'] = class_id
 geocovid19['xdd'] = xdd
 geocovid19['ydd'] = ydd
-print(geocovid19)
+
 geocovid19.to_csv('covid_stat.txt', index=False)
 
 ############################################## Create Map
@@ -61,12 +61,13 @@ def radius_producer(amount):
     else:
         return 30
 map = folium.Map(location=[46.42, 68.474], zoom_start=5)
+tooltip = 'Click me!'
 
 fgv = folium.FeatureGroup(name="Зарегистрированных случаев")
 
 for lt, ln, co in zip(lat, lon, cov):
     fgv.add_child(folium.CircleMarker(location=[lt, ln], radius = radius_producer(co), popup= "Зарегистрировано:"+str(co)+"чел.",
-    fill_color=color_producer(co), fill=True,  color = 'grey', fill_opacity=0.7))
+    fill_color=color_producer(co), fill=True, tooltip=tooltip, color = 'grey', fill_opacity=0.7))
 
 fgp = folium.FeatureGroup(name="Подтверждённые случаи на территории")
 
