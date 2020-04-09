@@ -2,7 +2,7 @@ import requests, re
 from bs4 import BeautifulSoup
 import pandas as pd 
 import folium
-
+from folium.plugins import Draw
 
 r=requests.get("https://www.coronavirus2020.kz/ru")
 c=r.content
@@ -110,7 +110,9 @@ legend_html = """
 </div>
 <p class="text-muted" style="font-size:x-small;">Data comes from <a href="https://www.coronavirus2020.kz/"> coronavirus2020.kz</a></p>
 </div>"""
+draw = Draw()
 
+draw.add_to(map)
 map.get_root().html.add_child(folium.Element(legend_html))
 
 map.add_child(fgv)
