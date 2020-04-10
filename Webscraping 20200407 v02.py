@@ -63,15 +63,15 @@ def radius_producer(amount):
 map = folium.Map(location=[46.42, 68.474], zoom_start=5)
 tooltip = 'Click me!'
 
-fgv = folium.FeatureGroup(name="Зарегистрированных случаев")
+covpnt = folium.FeatureGroup(name="Зарегистрированных случаев")
 
 for lt, ln, co in zip(lat, lon, cov):
-    fgv.add_child(folium.CircleMarker(location=[lt, ln], radius = radius_producer(co), popup= "Зарегистрировано:"+str(co)+"чел.",
+    covpnt.add_child(folium.CircleMarker(location=[lt, ln], radius = radius_producer(co), popup= "Зарегистрировано:"+str(co)+"чел.",
     fill_color=color_producer(co), fill=True, tooltip=tooltip, color = 'grey', fill_opacity=0.7))
 
-fgp = folium.FeatureGroup(name="Подтверждённые случаи на территории", show=False)
+covpol = folium.FeatureGroup(name="Подтверждённые случаи на территории", show=False)
 
-fgp.add_child(folium.GeoJson(data=open(r'adm1pol.json', encoding='utf-8-sig').read(),
+covpol.add_child(folium.GeoJson(data=open(r'adm1pol.json', encoding='utf-8-sig').read(),
 style_function=lambda x: {'fillColor':'green' if x['properties']['covid19'] <= 1
 else 'orange' if 2 <= x['properties']['covid19'] < 50 else 'red' if 50 <= x['properties']['covid19'] < 100 else 'blue'}))
 
@@ -115,8 +115,8 @@ draw = Draw()
 draw.add_to(map)
 map.get_root().html.add_child(folium.Element(legend_html))
 
-map.add_child(fgv)
-map.add_child(fgp)
+map.add_child(covpnt)
+map.add_child(covpol)
 map.add_child(folium.LayerControl())
 
 map.save("index.html")
